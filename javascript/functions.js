@@ -1,7 +1,6 @@
 
 function checkIframeAndID(nodeID, nodeAction, nodeValue) {
 
-
     // If the element exists in the iFrame
     if (!!document.getElementById("ptifrmtgtframe") && !!document.getElementById("ptifrmtgtframe").contentDocument.getElementById(nodeID)) {
 
@@ -134,7 +133,7 @@ function navToFavorite(componentName) {
     var waitForFavorites = setInterval(function(){
 
     	if (!!document.getElementById("pthnavmruroot")) {
-    		
+
     		clearInterval(waitForFavorites);
     		openFavorite();
     	};
@@ -143,7 +142,7 @@ function navToFavorite(componentName) {
 }
 
 function openFavorite () {
-	
+
 	allFavorites = document.querySelectorAll("a[role='menuitem']");
 
 	// Loop through all the favorite links in search of the corresponding component name
@@ -194,7 +193,7 @@ function openFavorite () {
 			if (localStorage.searchValue !== undefined) {
 				console.log("setting nextAction = search");
 				localStorage.nextAction = "search";
-				
+
 			}else if (localStorage.moreThanSearch !== undefined) {
 				console.log("Setting nextAction to continue");
 				localStorage.nextAction = "continue";
@@ -251,7 +250,7 @@ function addToFavorites () {
 	if (localStorage.searchValue !== undefined) {
 		console.log("setting nextAction = search");
 		localStorage.nextAction = "search";
-		
+
 	}else{
 		localStorage.clear();
 
@@ -362,7 +361,7 @@ function searchPage() {
             if (document.getElementById("ptifrmtgtframe").contentDocument.getElementById("NAME$0").innerHTML !== "Name") {
 
                 clearInterval(waitingForName);
-                
+
                 setTimeout(function(){
                     checkIframeAndID("NAME$0","click");
                 },300);
@@ -382,10 +381,10 @@ function searchPage() {
 		        document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_FROMDATE").select();
 
 		        console.log("Clearing Storage: search completed for close payable time.")
-		        localStorage.clear();        
-    			
+		        localStorage.clear();
+
     		};
-    		
+
     	},200)
 
     };
@@ -402,7 +401,7 @@ function searchPage() {
 
 // Generate Triggers
 function searchTriggers () {
-    
+
     var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
 
     // If the search field exists then search
@@ -424,18 +423,18 @@ function searchTriggers () {
 
         // Remove the first element of the object for this iteration
         localStorage.thisTrigger = JSON.stringify(newTriggerlist.shift());
-    
+
         // Update the localStorage.thisTrigger with the stringified version of the newTriggerlist
         localStorage.triggerList = JSON.stringify(newTriggerlist);
 
         // Enter the ID number and click search
         psIframe.getElementById("C_TL_TR_STAT_VW_EMPLID").value = JSON.parse(localStorage.thisTrigger).empid;
-        
+
         // If the EmplRrcd Field Exists then make sure it's blank
         if (!!psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD")) {
                 psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD").value = "";
         }
-        
+
         psIframe.getElementById("#ICSearch").click();
 
         console.log("Calling setTrigger()")
@@ -480,7 +479,7 @@ function setTrigger () {
 	                	clearInterval(waitForPopup);
 
 		                document.getElementById("#ICOK").click();
-		                
+
 		                console.log("Calling waitForSave()")
 		                waitForSave("pthnavbccrefanc_C_TL_TR_STATUS_CMP_GBL", "C_TL_TR_STAT_VW_EMPLID", true);
 
@@ -683,7 +682,7 @@ function addTermValues () {
         if (psIframe.getElementsByClassName("PSGRIDCOUNTER")[0].innerHTML === "1 of 2") {
 
             clearInterval(waitForJobDataRow);
-            
+
             // Initialize force change event
             var changeEvent = document.createEvent("HTMLEvents");
             changeEvent.initEvent("change", true, true);
@@ -730,7 +729,7 @@ function setRehireData () {
             psIframe.getElementById("#ICSave").click();
 
             startMutationWatchingIframe();
-            startMutationWatchingBody();   
+            startMutationWatchingBody();
         }
     },300)
 }
@@ -783,7 +782,7 @@ function searchRetros () {
 
     // Enter the ID number and click search
     psIframe.getElementById("PAY_LINE_WORK_EMPLID").value = JSON.parse(localStorage.thisRetro).empid;
-    
+
     psIframe.getElementById("#ICSearch").click();
 
     console.log("Calling addNewPayline");
@@ -800,7 +799,7 @@ function addNewPayline() {
         if (!!psIframe.getElementsByClassName("PSSRCHINSTRUCTIONS")[0] && psIframe.getElementsByClassName("PSSRCHINSTRUCTIONS")[0].innerHTML === "No matching values were found.") {
 
             clearInterval(waitForPayline);
-            
+
             // Add the EmpID to a list of EmpIDs not processed
             if (localStorage.empsNotProcessed === undefined) {
                 localStorage.empsNotProcessed = JSON.parse(localStorage.thisRetro).empid + ", ";
@@ -857,7 +856,7 @@ function addRetroValues () {
         if (psIframe.getElementsByClassName("PSGRIDCOUNTER")[0].innerHTML.substring(0,1) === "2") {
 
             clearInterval(waitForPayline);
-            
+
             // Initialize force change event
             var changeEvent = document.createEvent("HTMLEvents");
             changeEvent.initEvent("change", true, true);
@@ -955,7 +954,7 @@ function quickMessage(message, buttonText) {
 }
 
 function onlineCheckDates(){
-	
+
     // 7 hours = 25200000
     // 1 day = 86400000
     // new Date(1970,0,1).getTime() - 25200000 | The beginning of time (Jan 1, 1970 less 7 hours)
@@ -1032,7 +1031,7 @@ function ppDate(whichDay) {
     var mm = PPDate.getMonth() + 1;
     var yyyy = PPDate.getFullYear();
 
-    return mm + '/' + dd + '/' + yyyy;	
+    return mm + '/' + dd + '/' + yyyy;
 }
 
 function displayModal(modalMessage) {
@@ -1060,7 +1059,7 @@ function clearObservers () {
     };
 
     // Could also be id=someid, etc
-    var targets = document.querySelectorAll('[class=someclassname]'); 
+    var targets = document.querySelectorAll('[class=someclassname]');
 
     // Update/replace the observers on all the targets
     for(var i = 0; i < targets.length; ++i) {
@@ -1216,6 +1215,6 @@ function createSearchCriteriaObj() {
             "searchButtonID": "#ICSearch"
         }
     };
-    
+
     return searchCriteriaObj;
 }
