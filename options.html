@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PeopleSoft Automator Options</title>
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="javascript/options.js"></script>
+
+  <script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    // debugger;
+    var data = ev.dataTransfer.getData("text");
+    var nodeContainer = document.getElementById("squaresContainer")
+    nodeContainer.insertBefore(document.getElementById(data),nodeContainer.childNodes[getChildIndex(ev.target)]);
+}
+</script>
+</head>
+
+<body>
+    <label for="newTab">Open links in new tab.</label>
+    <input id="newTab" type="checkbox"></input><br><br>
+
+  <div id="status"></div>
+  <button id="save">Save</button><br>
+
+  <div class="dropable"></div>
+
+  <div id="status"></div><br>
+
+  <div class="mySquares" ondrop="drop(event)" ondragover="allowDrop(event)" id="squaresContainer">
+
+  <a draggable="true" ondragstart="drag(event)" class="square" id="openQueryManager"></a>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openTimeSheet">TS<span>Timesheet</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openRequestTimeAdmin">TA<span>Request Time Administration</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openJobData">JD<span>Job Data</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openReviewPaycheck">RP<span>Review Paycheck</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openLeaveReport">LR<span>Leave Report</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openAMCalc">AM<span>Absence Management</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openProcessMonitor">PM<span>Process Monitor</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openTLTRStatus">TR<span>TL TR Status</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openMaintainTimeReporterData">MT<span>Maintain Time Reporter Data</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openOCOnDemand">OC<span>Off Cycle On Demand</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openClosePayableTime">CL<span>Close Payable Time</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openByPayline">BP<span>By Payline</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openReviewTriggers">RT<span>Review Triggers (AM)</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openTaskGroup">TG<span>Taskgroup</span></button>
+  <button draggable="true" ondragstart="drag(event)" class="square" id="openUploadProcess">UP<span>Upload Process</span></button>
+
+</div>
+
+</body>
+</html>

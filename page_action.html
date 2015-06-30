@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <script src="javascript/popup.js"></script>
+        <link rel="stylesheet" type="text/css" href="main.css">
+        <style>
+
+      </style>
+
+    </head>
+
+    <body>
+
+<div id="main" style="margin:auto">
+
+<input id="newEmpid" style="display:none;border:none" readonly></input>
+
+<button class="nav" id="toggleOffCycleGroup" title="offCycleGroup">Create Online Check</button>
+<div id="offCycleGroup" class="collapsible">
+
+    <label for="empid">EmpID</label>
+    <input id="empid" type="text" placeholder="EmpID"></input>
+
+    <label for="dedsubset">Deduction Subset</label>
+    <select id="dedsubset">
+      <option></option>
+      <option>DED</option>
+      <option>401</option>
+      <option>None</option>
+    </select>
+
+    <label for="manualCheck">Manual Check</label>
+    <input id="manualCheck" type="checkbox"></input>
+    <button class="scriptButton" id="generateCheck">Create Check</button>
+
+</div>
+
+    <button class="nav" id="toggleTriggerGroup" title="triggerGroup">Generate Triggers</button>
+
+    <div id="triggerGroup" class="collapsible">
+        <textarea id="triggerList" placeholder="Paste Trigger Values Here  Format is (EmpID, EC Date)"></textarea>
+
+        <label for="AMTriggers">Generate AM Triggers</label>
+        <input id="AMTriggers" type="checkbox">  </input>
+
+        <button class="scriptButton" id="generateTriggers">Generate Triggers</button>
+
+    </div>
+
+    <button class="nav" id="toggleRetrosGroup" title="retrosGroup">Generate Retros</button>
+
+    <div id="retrosGroup" class="collapsible">
+        <textarea id="retrosList" placeholder="Paste Retro Values Here  Format is (EmpID, Dollar Amount)"></textarea>
+
+        <button class="scriptButton" id="generateRetros">Generate Retros</button>
+
+    </div>
+
+<!--     <button class="nav" id="toggleAdditionalPayGroup" title="additionalPayGroup">Create Additional Pay</button>
+
+    <div id="additionalPayGroup" class="collapsible">
+        <textarea id="additionalPayList" placeholder="Paste Additional Pay here. Format is (EmpID, Earnings Code, Amount)"></textarea>
+        <button class="scriptButton" id="createAdditionalPay">Create Additional Pay</button>
+    </div> -->
+
+    <button class="nav" id="toggleTerminateGroup" title="terminationGroup">Terminate Employees</button>
+
+    <div id="terminationGroup" class="collapsible">
+        <textarea id="terminationList" placeholder="Paste Termination Records here. Format is (EmpID, EmplRcd, Term Date, Action, Reason, Rehire Elig - Yes/No)"></textarea>
+        <button class="scriptButton" id="terminateEmployees">Terminate Employees</button>
+    </div>
+
+<div id="squaresContainer">
+    <!-- Queries -->
+    <button class="square" id="openQueryManager">QM</button>
+    <button class="square" id="openTimeUnion">TU</button>
+    <button class="square" id="openTimesheet">TS</button>
+    <button class="square" id="openJobData">JD</button>
+
+    <!-- Time Admin -->
+    <button class="square" id="openRequestTimeAdmin">TA</button>
+    <button class="square" id="openTLTRStatus">TR</button>
+    <button class="square" id="openUploadProcess">UP</button>
+    <button class="square" id="openProcessMonitor">PM</button>
+
+    <!-- Payroll Processing -->
+    <button class="square" id="openReviewPaycheck">RP</button>
+    <button class="square" id="openByPayline">BP</button>
+
+    <!-- Misc -->
+    <button class="square" id="openMaintainTimeReporterData">MT</button>
+    <button class="square" id="openStaticGroup">SG</button>
+
+    <!-- Absence Management -->
+    <button class="square" id="openLeaveReport">LR</button>
+    <button class="square" id="openReviewTriggers">RT</button>
+    <button class="square" id="openGroupLists">GL</button>
+    <button class="square" id="openAMCalc">AM</button>
+    <button class="square" id="openAbsenceAdjustments">AA</button>
+    <button class="square" id="openAbsenceEvents">AE</button>
+    <button class="square" id="openCreateAdditionalPay">CP</button>
+    <button class="square" id="openViewPayline">VP</button>
+    
+    <!-- Off-cycle Checks -->
+    <button class="square" id="openOCOnDemand">OC</button>
+    <button class="square" id="openClosePayableTime">CL</button>
+
+    <!-- Miscellaneous -->
+    <button class="square" id="openTaskGroup">TG</button>
+    <button class="square" id="openModifyAPerson">MP</button>
+
+    <!-- Admin System Only -->
+    <button class="square" id="openAddUpdatePosition">PD</button>
+    <button class="square" id="openAddAPerson">AP</button>
+    <button class="square" id="openI9EVerifyHome">I9</button>
+    <button class="square" id="openModifyAPerson">MP</button>
+    <button class="square" id="openUpdateEmployeeTaxData">TD</button>
+    <button class="square" id="openUpdatePayrollOptions">UP</button>
+
+</div>
+
+<textarea id="sandbox" style="display: none"></textarea>
+
+
+    </body>
+
+</html>
