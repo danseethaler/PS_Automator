@@ -515,7 +515,7 @@ function excelToJSONTriggers(pastedString, valueListID){
     return textToJSON;
 }
 
-function excelToJSONRetros(pastedString, valueListID, dateType){
+function excelToJSONRetros(pastedString, valueListID){
 
     var pastedStringArray = pastedString.replace(/[$]/g, "").split(/[\n\r\t\,]/g);
 
@@ -542,11 +542,7 @@ function excelToJSONRetros(pastedString, valueListID, dateType){
 
         // If this is an even numbered item (date/amount)
         }else if (stepCount === 1) {
-            if (dateType === "triggerDate") {
-                textToJSON += '"' + dateType + '":"' + pastedStringArray[i] + '"}'
-            } else if (dateType === "retroDate") {
-                textToJSON += '"retroAmount":"' + pastedStringArray[i] + '"}'
-            }
+            textToJSON += '"retroAmount":"' + pastedStringArray[i] + '"}'
 
             // If this is the last element in the array add a square bracket, otherwise add a comma
             if ((i + 1) === pastedStringArray.length) {
@@ -558,11 +554,7 @@ function excelToJSONRetros(pastedString, valueListID, dateType){
     }
 
     // Set local storage of triggerDate
-    if (dateType === "triggerDate") {
-        localStorage.triggerList = textToJSON;
-    }else if (dateType === "retroDate") {
-        localStorage.retrosList = textToJSON;
-    }
+    localStorage.retrosList = textToJSON;
 
     JSONToTable(JSON.parse(textToJSON), valueListID);
 

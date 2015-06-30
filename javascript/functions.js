@@ -408,13 +408,6 @@ function searchTriggers () {
     // If the search field exists then search
     if (!!psIframe.getElementById("C_TL_TR_STAT_VW_EMPLID") && localStorage.nextAction === "search") {
 
-        // If the search function is running make sure that the waitingForSearchNode interval is not running.
-        if (typeof waitingForSearchNode !== "undefined") {
-            // the variable is defined
-            console.log("Clearing waitingForSearchNode");
-            clearInterval(waitingForSearchNode);
-        }
-
         // If there are no elements left then stop observing and return false
         if (localStorage.triggerList === undefined || localStorage.triggerList.length === 2) {
 
@@ -509,7 +502,7 @@ function setTrigger () {
     }, 300)
 }
 
-function waitForSave (menuBarID, searchFieldID) {
+function waitForSave (menuBarID, searchFieldID, quickSave) {
 
   // Initiate the interval
   var waitForSaveNode = setInterval(function(){
@@ -521,7 +514,7 @@ function waitForSave (menuBarID, searchFieldID) {
     var waitWinState = psIframe.getElementById("WAIT_win0").style.display;
 
     // If the style of the SAVED_win0 === block --> the page has been saved
-    if (savedWinState === "block" || (savedWinState === "none" && waitWinState === "none")) {
+    if (savedWinState === "block" || (savedWinState === "none" && waitWinState === "none" && quickSave === true)) {
       clearInterval(waitForSaveNode);
 
       // Set localStorage.nextAction
@@ -901,12 +894,14 @@ function addNewPayline() {
 
         // Make sure the plus button exists and click it
         if (!!psIframe.getElementById("$ICField22$new$0$$0")) {
-            psIframe.getElementById("$ICField22$new$0$$0").click();
+            setTimeout(function(){
+                psIframe.getElementById("$ICField22$new$0$$0").click();
 
-            console.log("calling addRetroValues")
-            addRetroValues();
+                console.log("calling addRetroValues")
+                addRetroValues();
 
-            clearInterval(waitForPayline);
+                clearInterval(waitForPayline);
+            },200)
         };
 
     },300)
@@ -940,11 +935,13 @@ function addRetroValues () {
                 psIframe.getElementById("PAY_EARNINGS_OK_TO_PAY$0").click();
             }
 
+            // Start watching for body mutations (warning messages)
+            startMutationWatchingBody();
+
             // Click save
             psIframe.getElementById("#ICSave").click();
 
-            startMutationWatchingIframe();
-            startMutationWatchingBody();
+            waitForSave("pthnavbccrefanc_HC_PAY_SHEET_LINE_USA2","PAY_LINE_WORK_EMPLID")
         }
 
     },300);

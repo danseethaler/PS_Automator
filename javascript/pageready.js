@@ -1,6 +1,15 @@
 
 function pageReady(){
 
+    // Make sure that the waitingForSearchNode interval is not still running.
+	// This is caused when the DOMLoaded event handler is fired but the js on
+	// from before the DOM refresh is still running.
+    if (typeof waitingForSearchNode !== "undefined") {
+        // the variable is defined
+        console.log("Clearing waitingForSearchNode");
+        clearInterval(waitingForSearchNode);
+    }
+
 	// Start watching for mutations if scriptAction is not null
 	if (localStorage.scriptAction !== undefined) {
 
