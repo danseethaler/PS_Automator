@@ -34,92 +34,8 @@ function startMutationWatchingIframe () {
     iframeObserver.observe(document.getElementById("ptifrmtgtframe").contentDocument, config)
 }
 
-function waitForSave (menuBarID, searchFieldID, quickSave) {
-    // configuration of the observer:
-    var config = { attributes: true, childList: true, characterData: true, subtree:true };
-
-    var iframeObserver = new MutationObserver(function(mutations) {
-
-        // Loop through all the changes
-        for (var i = 0; i < mutations.length; i++) {
-
-            // Check if there's a change to the SAVED_win0 node
-            if (mutations[i].target.id === "SAVED_win0"){
-
-                // Set the iframe variable
-                var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
-
-                // Set localStorage.nextAction
-                localStorage.nextAction = "search";
-
-                // If the style of the SAVED_win0 === block --> the page has been saved
-                if (psIframe.getElementById("SAVED_win0").style.display === "block") {
-
-                    if (psIframe.getElementById("ptStatusText_win0").innerHTML === "Saved") {
-
-                        // Disconnect the iframeObserver
-                        iframeObserver.disconnect();
-
-                        // If the search field isn't present return to search page
-                        if (!psIframe.getElementById(searchFieldID)) {
-                            document.getElementById(menuBarID).click(); 
-                        }
-
-                        lookForSearchNode(searchFieldID);
-
-                        // Stop iterating through nodes
-                        return;
-
-                    }
-                }
-
-                // If the quickSave parameter is true the page may save so quickly that no saved message is displayed.
-                if(quickSave === true){
-                    // Wait for saving node to disappear and return to search
-                    setTimeout(function(){
-                        if (psIframe.getElementById("SAVED_win0").style.display === "none") {
-
-                            // Disconnect the iframeObserver
-                            iframeObserver.disconnect();
-
-                            // Return to search
-                            document.getElementById(menuBarID).click(); 
-    
-                            lookForSearchNode(searchFieldID);
-
-                        }
-                    },500)
-
-                    // Stop iterating through nodes
-                    return;
-                }
-            }
-        }
-    });
-
-    // pass in the target node, as well as the observer options
-    iframeObserver.observe(document.getElementById("ptifrmtgtframe").contentDocument, config)
-}
-
-function lookForSearchNode (searchFieldID) {
-    // If the search field shows up and this code is still running the link didn't initiate a page reload
-    var waitingForSearchNode = setInterval(function(){
-
-        // Set the iframe variable
-        var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
-
-        if (!!psIframe.getElementById(searchFieldID)) {
-            console.log("Called pageReady manually");
-
-            clearInterval(waitingForSearchNode);
-
-            pageReady();
-        };
-    },500);
-}
-
 function bodyObserver_generateRetros (mutations, bodyObserver) {
-    
+
     if (localStorage.scriptAction === undefined || !!document.getElementById("ptifrmtgtframe").contentDocument.getElementById("PAY_LINE_WORK_EMPLID")) {
         bodyObserver.disconnect();
         return false;
@@ -166,7 +82,7 @@ function bodyObserver_generateRetros (mutations, bodyObserver) {
 }
 
 function bodyObserver_terminateEmployees (mutations, bodyObserver) {
-    
+
     if (localStorage.scriptAction === undefined || !!document.getElementById("ptifrmtgtframe").contentDocument.getElementById("EMPLMT_SRCH_COR_EMPLID")) {
         bodyObserver.disconnect();
         return false;
@@ -226,7 +142,7 @@ function iframeObserver_terminateEmployees (mutations, iframeObserver) {
                 iframeObserver.disconnect();
 
                 // Return to search
-                document.getElementById("pthnavbccrefanc_HC_JOB_DATA_GBL").click(); 
+                document.getElementById("pthnavbccrefanc_HC_JOB_DATA_GBL").click();
 
 
                 // If the search field shows up and this code is still running the link didn't initiate a page reload
@@ -258,7 +174,7 @@ function bodyObserver_openJobData(mutations, bodyObserver){
     }
 
     if (checkIframeAndID("win0divPAGECONTAINER","indexOf","No matching values were found.")) {
-        
+
         // Clear storage and observers
         bodyObserver.disconnect();
         localStorage.clear();
@@ -373,7 +289,7 @@ function iframeObserver_generateAMTriggers (mutations, iframeObserver) {
 
         // Remove the first element of the object for this iteration
         localStorage.thisTrigger = JSON.stringify(newTriggerlist.shift());
-    
+
         // Update the localStorage.thisTrigger with the stringified version of the newTriggerlist
         localStorage.AMTriggerList = JSON.stringify(newTriggerlist);
 
@@ -410,13 +326,10 @@ function iframeObserver_generateAMTriggers (mutations, iframeObserver) {
                 psIframe.getElementById("GP_RTO_TRGR_VW_TRGR_EFFDT$1").dispatchEvent(changeEvent);
                 psIframe.getElementById("GP_RTO_TRGR_VW_TRGR_EVENT_ID$1").value = "LDSUSAABS";
                 psIframe.getElementById("GP_RTO_TRGR_VW_TRGR_EVENT_ID$1").dispatchEvent(changeEvent);
-                
+
                 saveAndReturn(400);
-                
+
             }
         },300);
     }
 }
-
-
-

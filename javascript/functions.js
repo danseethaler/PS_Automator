@@ -1,6 +1,7 @@
 
 function checkIframeAndID(nodeID, nodeAction, nodeValue) {
 
+
     // If the element exists in the iFrame
     if (!!document.getElementById("ptifrmtgtframe") && !!document.getElementById("ptifrmtgtframe").contentDocument.getElementById(nodeID)) {
 
@@ -407,6 +408,13 @@ function searchTriggers () {
     // If the search field exists then search
     if (!!psIframe.getElementById("C_TL_TR_STAT_VW_EMPLID") && localStorage.nextAction === "search") {
 
+        // If the search function is running make sure that the waitingForSearchNode interval is not running.
+        if (typeof waitingForSearchNode !== "undefined") {
+            // the variable is defined
+            console.log("Clearing waitingForSearchNode");
+            clearInterval(waitingForSearchNode);
+        }
+
         // If there are no elements left then stop observing and return false
         if (localStorage.triggerList === undefined || localStorage.triggerList.length === 2) {
 
@@ -430,15 +438,26 @@ function searchTriggers () {
         // Enter the ID number and click search
         psIframe.getElementById("C_TL_TR_STAT_VW_EMPLID").value = JSON.parse(localStorage.thisTrigger).empid;
 
-        // If the EmplRrcd Field Exists then make sure it's blank
+        // If the EmplRcd Field Exists then make sure it's blank
         if (!!psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD")) {
-                psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD").value = "";
+                psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD").value = JSON.parse(localStorage.thisTrigger).emplRcd;
+
+                psIframe.getElementById("#ICSearch").click();
+
+                console.log("Calling setTrigger()")
+                setTrigger();
+        }else { // Click the advanced search option first then search with the EmplRcd
+            psIframe.querySelector("a[name='#ICAdvSearch']").click();
+            setTimeout(function(){
+
+                psIframe.getElementById("C_TL_TR_STAT_VW_EMPL_RCD").value = JSON.parse(localStorage.thisTrigger).emplRcd;
+
+                psIframe.getElementById("#ICSearch").click();
+
+                console.log("Calling setTrigger()")
+                setTrigger();
+            },300)
         }
-
-        psIframe.getElementById("#ICSearch").click();
-
-        console.log("Calling setTrigger()")
-        setTrigger();
     }
 }
 
@@ -468,7 +487,7 @@ function setTrigger () {
                 psIframe.getElementById("#ICSave").click()
 
                 console.log("Calling waitForSave()")
-                waitForSave("pthnavbccrefanc_C_TL_TR_STATUS_CMP_GBL", "C_TL_TR_STAT_VW_EMPLID", true);
+                waitForSave("pthnavbccrefanc_C_TL_TR_STATUS_CMP_GBL", "C_TL_TR_STAT_VW_EMPLID");
 
             // Otheriwise check the box -> saveAndReturn is called in the bodyObserver
             }else{
@@ -481,7 +500,7 @@ function setTrigger () {
 		                document.getElementById("#ICOK").click();
 
 		                console.log("Calling waitForSave()")
-		                waitForSave("pthnavbccrefanc_C_TL_TR_STATUS_CMP_GBL", "C_TL_TR_STAT_VW_EMPLID", true);
+		                waitForSave("pthnavbccrefanc_C_TL_TR_STATUS_CMP_GBL", "C_TL_TR_STAT_VW_EMPLID");
 
 		            }
                 },200)
@@ -490,6 +509,54 @@ function setTrigger () {
     }, 300)
 }
 
+function waitForSave (menuBarID, searchFieldID) {
+
+  // Initiate the interval
+  var waitForSaveNode = setInterval(function(){
+
+    // Set the iframe variable
+    var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+
+    var savedWinState = psIframe.getElementById("SAVED_win0").style.display;
+    var waitWinState = psIframe.getElementById("WAIT_win0").style.display;
+
+    // If the style of the SAVED_win0 === block --> the page has been saved
+    if (savedWinState === "block" || (savedWinState === "none" && waitWinState === "none")) {
+      clearInterval(waitForSaveNode);
+
+      // Set localStorage.nextAction
+      localStorage.nextAction = "search";
+
+      // If the search field isn't present return to search page
+      if (!psIframe.getElementById(searchFieldID)) {
+          document.getElementById(menuBarID).click();
+      }
+
+      console.log("Calling lookForSearchNode()");
+      lookForSearchNode(searchFieldID);
+
+      // Stop iterating through nodes
+      return;
+    }
+  },300);
+}
+
+function lookForSearchNode (searchFieldID) {
+  // If the search field shows up and this code is still running the link didn't initiate a page reload
+  waitingForSearchNode = setInterval(function(){
+
+      // Set the iframe variable
+      var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+
+      if (!!psIframe.getElementById(searchFieldID)) {
+          console.log("Called pageReady manually");
+
+          clearInterval(waitingForSearchNode);
+
+          pageReady();
+      };
+  },500);
+}
 // Off-Cycle Check
 function waitForPayline() {
 

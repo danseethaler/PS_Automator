@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     });
-    
+
     { // Add event listeners
         document.querySelector("#main").addEventListener("click", toggleDivs, false);
 
@@ -96,7 +96,7 @@ function insertEmpID (e) {
     for (var i = collapsibleNodes.length - 1; i >= 0; i--) {
         if (collapsibleNodes[i].style.display === "block") {
             return;
-        }; 
+        };
     };
 
     var newEmpid = document.getElementById("newEmpid");
@@ -188,7 +188,7 @@ function sendAction(e){
                 "openI9EVerifyHome": "I-9 & E-Verify Homepage",
                 "openModifyAPerson": "Modify a Person",
                 "openReviewPaycheck":"Review Paycheck US",
-                
+
                 "openUpdateEmployeeTaxData": "Update Employee Tax Data US",
                 "openUpdatePayrollOptions": "Update Payroll Options US",
             };
@@ -402,13 +402,13 @@ function convertString(e){
     var pastedString = document.getElementById(valueListID).value.trim();
 
     if (valueListID === "triggerList") {
-        excelToJSONTriggers(pastedString, valueListID, "triggerDate");
+        excelToJSONTriggers(pastedString, valueListID);
 
     }else if (valueListID === "additionalPayList") {
         excelToJSON(pastedString, valueListID);
 
     }else if (valueListID === "retrosList") {
-        excelToJSONTriggers(pastedString, valueListID, "retroDate");
+        excelToJSONRetros(pastedString, valueListID);
 
     }else if (valueListID === "terminationList") {
         excelToJSONTerminations(pastedString, valueListID);
@@ -468,7 +468,54 @@ function excelToJSONTerminations(pastedString, valueListID){
     JSONToTable(JSON.parse(textToJSON), valueListID);
 }
 
-function excelToJSONTriggers(pastedString, valueListID, dateType){
+function excelToJSONTriggers(pastedString, valueListID){
+
+    var pastedStringArray = pastedString.replace(/[$]/g, "").split(/[\n\r\t\,]/g);
+
+    var textToJSON = '[';
+
+    for (var i = 0; i < pastedStringArray.length; i++) {
+        var stepCount = i%3;
+
+        // Check to see if value is missing on last employee values
+        if (stepCount !== 2 && i === pastedStringArray.length) {
+            console.log("Missing values on end of array.");
+            return false;
+        }
+
+        // If this is the first item in the array (empid)
+        if (stepCount === 0) {
+            if (/^\d+$/.test(pastedStringArray[i]) && (pastedStringArray[i].length == 6 || pastedStringArray[i].length == 9)) {
+                textToJSON += '{"empid":"' + pastedStringArray[i] + '",';
+            }else {
+                console.log("EmpID " + pastedStringArray[i] + " is not in a valid format. Iteration #" + i);
+                return false;
+            }
+
+        // If this is the second item in the array (emplRcd)
+        }else if (stepCount === 1) {
+            textToJSON += '"emplRcd":"' + pastedStringArray[i] + '",';
+
+        // If this is third item in the array (date)
+        }else if (stepCount === 2) {
+            textToJSON += '"triggerDate":"' + pastedStringArray[i] + '"}';
+
+            // If this is the last element in the array add a square bracket, otherwise add a comma
+            if ((i + 1) === pastedStringArray.length) {
+                textToJSON += ']'
+            }else {
+                textToJSON += ','
+            }
+        }
+
+    }
+
+    localStorage.triggerList = textToJSON;
+    JSONToTable(JSON.parse(textToJSON), valueListID);
+    return textToJSON;
+}
+
+function excelToJSONRetros(pastedString, valueListID, dateType){
 
     var pastedStringArray = pastedString.replace(/[$]/g, "").split(/[\n\r\t\,]/g);
 
@@ -516,7 +563,7 @@ function excelToJSONTriggers(pastedString, valueListID, dateType){
     }else if (dateType === "retroDate") {
         localStorage.retrosList = textToJSON;
     }
-    
+
     JSONToTable(JSON.parse(textToJSON), valueListID);
 
     return textToJSON;
@@ -556,7 +603,7 @@ function JSONToTable(JSONObject, valueListID){
                     nextRowNode.appendChild(currentCell);
                 }
             }
-        
+
             // Add the new row to the table
             triggerTable.appendChild(nextRowNode);
 
@@ -689,4 +736,3 @@ function sendToClipboard (stringToClipboard) {
     sandbox.value = '';
     sandbox.style.display = "none";
 }
-

@@ -28,7 +28,7 @@ function pageReady(){
 
 			document.getElementById("InputKeys_bind3").value = ppDate();
 			document.getElementById("InputKeys_bind3").dispatchEvent(changeEvent);
-			
+
 			document.getElementById("#ICOK").click();
 
 			console.log("Clearing local storage after searchQuery");
