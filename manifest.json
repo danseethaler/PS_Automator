@@ -17,10 +17,6 @@
         "default_title":"PeopleSoft Automator",
         "default_popup":"page_action.html"
     },
-    "options_ui":{
-        "page":"options.html",
-        "chrome_style":true
-    },
     "permissions":[
         "clipboardRead",
         "clipboardWrite",

@@ -13,8 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 "openI9EVerifyHome",
                 "openModifyAPerson",
                 "openUpdateEmployeeTaxData",
-                "openUpdatePayrollOptions",
-                "toggleTerminateGroup"
+                "openUpdatePayrollOptions"
             ];
 
             for (var i = hideIDs.length - 1; i >= 0; i--) {
@@ -25,23 +24,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }else if(response.system === "admin"){
 
             var hideIDs = [
-                "toggleOffCycleGroup",
-                "toggleTriggerGroup",
-                "toggleRetrosGroup",
-                "openRequestTimeAdmin",
                 "openLeaveReport",
-                "openAMCalc",
                 "openProcessMonitor",
                 "openTLTRStatus",
-                "openMaintainTimeReporterData",
-                "openOCOnDemand",
-                "openClosePayableTime",
                 "openByPayline",
-                "openReviewTriggers",
-                "openTaskGroup",
-                "openUploadProcess",
-                "openAbsenceAdjustments",
-                "openAbsenceEvents",
                 "openCreateAdditionalPay",
                 "openViewPayline"
             ];
@@ -56,21 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     { // Add event listeners
         document.querySelector("#main").addEventListener("click", toggleDivs, false);
-
-        document.querySelector('#triggerList').addEventListener('change', convertString, false);
-        // document.querySelector('#additionalPayList').addEventListener('change', convertString, false);
-        document.querySelector('#retrosList').addEventListener('change', convertString, false);
-        document.querySelector('#terminationList').addEventListener('change', convertString, false);
-
-        document.querySelector("#generateCheck").addEventListener("click", generateCheck, false);
-        document.querySelector("#generateCheck").addEventListener("contextmenu", generateCheck, false);
-        document.querySelector("#generateTriggers").addEventListener("click", generateTriggers, false);
-        document.querySelector("#generateTriggers").addEventListener("contextmenu", generateTriggers, false);
-        document.querySelector("#generateRetros").addEventListener("click", generateRetros, false);
-        document.querySelector("#generateRetros").addEventListener("contextmenu", generateRetros, false);
-        document.querySelector("#terminateEmployees").addEventListener("click", terminateEmployees, false);
-        document.querySelector("#terminateEmployees").addEventListener("contextmenu", terminateEmployees, false);
-        // document.querySelector("#createAdditionalPay").addEventListener("click", generateAdditionalPay, false);
 
         var mySquares = document.getElementsByClassName('square');
 
@@ -190,7 +161,8 @@ function sendAction(e){
                 "openReviewPaycheck":"Review Paycheck US",
 
                 "openUpdateEmployeeTaxData": "Update Employee Tax Data US",
-                "openUpdatePayrollOptions": "Update Payroll Options US",
+                "openLeaveReport": "Employee Leave History",
+                "openUpdatePayrollOptions": "Update Payroll Options US"
             };
         }
 

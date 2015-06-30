@@ -1218,7 +1218,7 @@ function createSearchCriteriaObj() {
             "searchValue": localStorage.empid,
             "searchButtonID": "#ICSearch"
         },
-        "openopenUpdateEmployeeTaxData": {
+        "openUpdateEmployeeTaxData": {
             "searchFieldID": "C_EMPL_COMP_SRC_EMPLID",
             "searchValue": localStorage.empid,
             "searchButtonID": "#ICSearch"
