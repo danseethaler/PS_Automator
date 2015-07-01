@@ -34,28 +34,28 @@ chrome.runtime.onMessage.addListener (
 
 			clearObservers();
 			localStorage.clear();
-			
+
 			return;
         };
 
 		// Set the evironment and system variables
-		switch (window.location.host){
-			case "hrcore91.ldschurch.org":
+		switch (window.location.host.substring(0,window.location.host.indexOf("."))){
+			case "hrcore91":
 	            localStorage.environment = "prod";
 	            localStorage.system = "core";
 				break;
 
-			case "hrcore91-sg-stage.ldschurch.org":
+			case "hrcore91-sg-stage":
 	            localStorage.environment = "stage";
 	            localStorage.system = "core";
 				break;
 
-			case "hradmin91.ldschurch.org":
+			case "hradmin91":
 	            localStorage.system = "admin";
 	            localStorage.environment = "prod";
 				break;
 
-			case "hradmin91-sg-stage.ldschurch.org":
+			case "hradmin91-sg-stage":
 	            localStorage.system = "admin";
 	            localStorage.environment = "stage";
 				break;
