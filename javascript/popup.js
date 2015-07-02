@@ -517,7 +517,7 @@ function excelToJSONTriggers(pastedString, valueListID){
 
 function excelToJSONRetros(pastedString, valueListID){
 
-    var pastedStringArray = pastedString.replace(/[$]/g, "").split(/[\n\r\t\,]/g);
+    var pastedStringArray = pastedString.replace(/[$]/g, "").split(/[\n\r\t]/g);
 
     var textToJSON = '[';
 

@@ -47,23 +47,29 @@ function pageReady(){
 
 			// Refresh process monitor
 		    if (localStorage.scriptAction === "openProcessMonitor") {
-		        var refreshButton = setInterval(function() {
 
-		            var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+                // If the status of the most recent job has not completed then refresh the
+                // screen every three seconds until it is completed.
+	            if (!psIframe.getElementById("PMN_PRCSLIST_RUNSTATUSDESCR$0").innerHTML === "Success") {
 
-		            if (localStorage.scriptAction === undefined || !!document.getElementById("pt_modalMask")) {
-		                clearInterval(refreshButton);
+    		        var refreshButton = setInterval(function() {
 
-		            } else if (psIframe.getElementById("PMN_PRCSLIST_RUNSTATUSDESCR$0").innerHTML === "Success") {
-		                alert("Processing complete");
-		                clearInterval(refreshButton);
+    		            var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
 
-		            } else {
-		                checkIframeAndID("REFRESH_BTN", "click")
+    		            if (localStorage.scriptAction === undefined || !!document.getElementById("pt_modalMask")) {
+    		                clearInterval(refreshButton);
 
-		            }
+    		            } else if (psIframe.getElementById("PMN_PRCSLIST_RUNSTATUSDESCR$0").innerHTML === "Success") {
+    		                alert("Processing complete");
+    		                clearInterval(refreshButton);
 
-		        }, 3000)
+    		            } else {
+    		                checkIframeAndID("REFRESH_BTN", "click")
+
+    		            }
+
+    		        }, 3000)
+                }
 		    }
 
 		}else {
