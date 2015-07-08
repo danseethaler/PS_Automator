@@ -363,6 +363,14 @@ function searchPage() {
 
                 clearInterval(waitingForName);
 
+                // Initialize force change event code
+                var changeEvent = document.createEvent("HTMLEvents");
+                changeEvent.initEvent("change", true, true);
+
+                var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+                psIframe.getElementById("DATE_DAY12").value = ppDate();
+                psIframe.getElementById("DATE_DAY12").dispatchEvent(changeEvent);
+
                 setTimeout(function(){
                     checkIframeAndID("NAME$0","click");
 
