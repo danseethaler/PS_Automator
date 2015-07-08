@@ -16,7 +16,7 @@ function nodeAdded(newNode){
     if (!!newNode.id) {
 
         if (newNode.id === "pthnavbccref_C_RUNCTL_CPAY955A_GBL_1" && localStorage.nextAction === "runReport") {
-            document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_ASOFDATE").value = "070315";
+            document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_ASOFDATE").value = "071715";
             document.getElementById("ptifrmtgtframe").contentDocument.getElementById("PRCSRQSTDLG_WRK_LOADPRCSRQSTDLGPB").click();
             localStorage.clear();
         }

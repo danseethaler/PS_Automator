@@ -16,7 +16,7 @@ function nodeAdded(newNode){
     if (!!newNode.id) {
 
         if (newNode.id === "ptabnsp_pthnavbccref_C_RUNCTL_CPAY908B_USA" && localStorage.nextAction === "runReport") {
-            document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_RUN_ID").value = "B1415";
+            document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_RUN_ID").value = "B1515";
             if (document.getElementById("ptifrmtgtframe").contentDocument.getElementById("RUN_CNTL_USER_C_FROM_DEPTID").value.length === 10) {
                 document.getElementById("ptifrmtgtframe").contentDocument.getElementById("PRCSRQSTDLG_WRK_LOADPRCSRQSTDLGPB").click();
             }else {
