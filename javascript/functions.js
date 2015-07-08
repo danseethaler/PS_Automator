@@ -365,6 +365,16 @@ function searchPage() {
 
                 setTimeout(function(){
                     checkIframeAndID("NAME$0","click");
+
+                    var waitForDateField = setInterval(function(){
+
+                        if (!!document.getElementById("ptifrmtgtframe").contentDocument.getElementById("DATE_DAY1")) {
+                            clearInterval(waitForDateField);
+
+                            var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+                            psIframe.getElementById("DATE_DAY1").select()
+                        }
+                    },300);
                 },300);
             };
         },200);
