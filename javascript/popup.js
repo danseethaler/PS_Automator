@@ -200,8 +200,12 @@ function sendAction(e){
         if (document.getElementById("newEmpid").value.length === 6) {
             requestObject.empid = document.getElementById("newEmpid").value;
 
-        }else if (!!getEmpidFromClipboard()) {
-            requestObject.empid = getEmpidFromClipboard();
+        }else if (e.target.id === "openTaskGroup") {
+            if (!!getEmpidFromClipboard("taskgroup")) {
+                requestObject.taskgroup = getEmpidFromClipboard("taskgroup");
+            }
+        }else if (!!getEmpidFromClipboard("empid")) {
+            requestObject.empid = getEmpidFromClipboard("empid");
         }
 
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -699,7 +703,7 @@ function stringToTable(pastedString, valueListID){
   return;
 }
 
-function getEmpidFromClipboard(){
+function getEmpidFromClipboard(cbValue){
     var sandbox = document.getElementById('sandbox');
     sandbox.style.display = "block";
     sandbox.value = '';
@@ -710,10 +714,20 @@ function getEmpidFromClipboard(){
     sandbox.style.display = "none";
     sandbox.value = '';
 
-    if (/^\d+$/.test(clipboardData) && (clipboardData.length == 6 || clipboardData.length == 9)) {
-        return clipboardData;
-    }else {
-        return false;
+    if (cbValue === "empid") {
+
+        if (/^\d+$/.test(clipboardData) && (clipboardData.length === 6 || clipboardData.length === 9)) {
+            return clipboardData;
+        }else {
+            return false;
+        }
+
+    }else if (cbValue ==="taskgroup") {
+        if (/^\d+$/.test(clipboardData) && (clipboardData.length === 7)) {
+            return clipboardData;
+        }else {
+            return false;
+        }
     }
 }
 

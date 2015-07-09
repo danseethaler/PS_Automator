@@ -1286,6 +1286,11 @@ function createSearchCriteriaObj() {
             "searchValue": "EMPLOYEE",
             "searchButtonID": "#ICSearch"
         },
+        "openTaskGroup": {
+            "searchFieldID": "TL_TASKGRP_TBL_TASKGROUP",
+            "searchValue": localStorage.taskgroup,
+            "searchButtonID": "#ICSearch"
+        },
         "openTimeUnion": {
             "searchFieldID": "QRYSELECT_WRK_QRYSEARCHTEXT254",
             "searchValue": "Click",
