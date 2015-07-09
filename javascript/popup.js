@@ -43,7 +43,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 "openAbsenceAdjustments",
                 "openAbsenceEvents",
                 "openCreateAdditionalPay",
-                "openViewPayline"
+                "openStaticGroup",
+                "openGroupLists",
+                "openTaskProfile"
             ];
 
             for (var i = hideIDs.length - 1; i >= 0; i--) {
