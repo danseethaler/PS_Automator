@@ -394,7 +394,7 @@ function toggleDivs(e) {
 
     // Enter the clipboardData to empid for off-cycle checks
     if (e.target.title == "offCycleGroup" && document.getElementById('offCycleGroup').style.display === "block") {
-        var clipboardData = getEmpidFromClipboard();
+        var clipboardData = getEmpidFromClipboard("empid");
         if (/^\d+$/.test(clipboardData) && clipboardData.length == 6 || clipboardData.length == 9) {
             document.getElementById('empid').value = clipboardData;
         }else {

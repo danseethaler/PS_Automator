@@ -315,15 +315,28 @@ function searchPage() {
         var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
         var queryTableRows = psIframe.querySelectorAll(".PSLEVEL1GRID tr td div span")
 
-        // Search for the table row with the text "A_TIME_UNION"
+        // Search for the table row with the text "TIME_UNION_DS"
         for (var i = 0; i < queryTableRows.length; i++) {
-            if (queryTableRows[i].innerHTML === "A_TIME_UNION") {
+            if (queryTableRows[i].innerHTML === "TIME_UNION_DS") {
                 // Extract the row number from the id to be used to click on the right hyperlink.
                 var idLength = queryTableRows[i].id.length;
-                var queryRow = queryTableRows[i].id.substring(idLength - 1, idLength)
+                var queryRow = queryTableRows[i].id.substring(idLength - 2, idLength -1)
+                if (/\d/.test(queryRow)) {
+                    var queryRow = queryTableRows[i].id.substring(idLength - 2, idLength)
+                }else {
+                    var queryRow = queryTableRows[i].id.substring(idLength - 1, idLength)
+                }
                 console.log(queryRow);
             }
         }
+
+        // If the TIME_UNION_DS query isn't a favorite then prompt the user to add it.
+        if (queryRow === undefined) {
+            alert("Please add the TIME_UNION_DS query to your favorites.")
+            localStorage.clear();
+            return;
+        }
+
         checkIframeAndID("QRYRUN2$" + queryRow,"click");
         localStorage.nextAction = "searchQuery";
         return;
