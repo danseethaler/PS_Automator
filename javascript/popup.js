@@ -198,7 +198,9 @@ function sendAction(e){
 
         // Add the EmpID to the request object if available
         if (document.getElementById("newEmpid").value.length === 6) {
-            requestObject.empid = document.getElementById("newEmpid").value;
+            var typedEmpid = document.getElementById("newEmpid").value;
+            requestObject.empid = typedEmpid;
+            sendToClipboard(typedEmpid);
 
         }else if (e.target.id === "openTaskGroup" || e.target.id === "openTaskProfile") {
             if (!!getEmpidFromClipboard("taskgroup")) {
