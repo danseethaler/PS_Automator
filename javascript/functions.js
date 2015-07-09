@@ -312,15 +312,19 @@ function searchPage() {
 
     if (localStorage.scriptAction === "openTimeUnion") {
 
-        var queryTableRows = document.querySelectorAll(".PSLEVEL1GRID tr td div span")
+        var psIframe = document.getElementById("ptifrmtgtframe").contentDocument;
+        var queryTableRows = psIframe.querySelectorAll(".PSLEVEL1GRID tr td div span")
 
+        // Search for the table row with the text "A_TIME_UNION"
         for (var i = 0; i < queryTableRows.length; i++) {
             if (queryTableRows[i].innerHTML === "A_TIME_UNION") {
-                myQueryRow = queryTableRows[i];
-                myQueryRow.parentNode.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.firstChild.nextSibling.firstChild.firstChild.click();
+                // Extract the row number from the id to be used to click on the right hyperlink.
+                var idLength = queryTableRows[i].id.length;
+                var queryRow = queryTableRows[i].id.substring(idLength - 1, idLength)
+                console.log(queryRow);
             }
         }
-        checkIframeAndID("QRYRUN2$3","click");
+        checkIframeAndID("QRYRUN2$" + queryRow,"click");
         localStorage.nextAction = "searchQuery";
         return;
     }
