@@ -311,6 +311,15 @@ function searchPage() {
     }
 
     if (localStorage.scriptAction === "openTimeUnion") {
+
+        var queryTableRows = document.querySelectorAll(".PSLEVEL1GRID tr td div span")
+
+        for (var i = 0; i < queryTableRows.length; i++) {
+            if (queryTableRows[i].innerHTML === "A_TIME_UNION") {
+                myQueryRow = queryTableRows[i];
+                myQueryRow.parentNode.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.nextSibling.firstChild.nextSibling.firstChild.firstChild.click();
+            }
+        }
         checkIframeAndID("QRYRUN2$3","click");
         localStorage.nextAction = "searchQuery";
         return;
