@@ -169,7 +169,7 @@ function sendAction(e){
                 "openAbsenceAdjustments": "Absences",
                 "openAbsenceEvents": "Absence Event",
                 "openCreateAdditionalPay": "Create Additional Pay",
-                "openViewPayline": "View Payline",
+                "openTaskProfile": "Task Profile",
 
                 "openStaticGroup": "Static Group",
                 "openTimeUnion": "Query Manager",
@@ -200,7 +200,7 @@ function sendAction(e){
         if (document.getElementById("newEmpid").value.length === 6) {
             requestObject.empid = document.getElementById("newEmpid").value;
 
-        }else if (e.target.id === "openTaskGroup") {
+        }else if (e.target.id === "openTaskGroup" || e.target.id === "openTaskProfile") {
             if (!!getEmpidFromClipboard("taskgroup")) {
                 requestObject.taskgroup = getEmpidFromClipboard("taskgroup");
             }

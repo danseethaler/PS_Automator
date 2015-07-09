@@ -1276,9 +1276,9 @@ function createSearchCriteriaObj() {
             "searchValue": localStorage.empid,
             "searchButtonID": "#ICSearch"
         },
-        "openViewPayline": {
-            "searchFieldID": "C_PAY_LINE_WORK_EMPLID",
-            "searchValue": localStorage.empid,
+        "openTaskProfile": {
+            "searchFieldID": "TL_TSKPRF_TASK_PROFILE_ID",
+            "searchValue": localStorage.taskgroup,
             "searchButtonID": "#ICSearch"
         },
         "openGroupLists": {
